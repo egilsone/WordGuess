@@ -68,11 +68,6 @@ public class WordGuessMainActivity extends Activity {
     	boolean finished = game!=null && game.isFinished();
     	int gameVisibility = gameExists ? View.VISIBLE : View.INVISIBLE;
 
-    	/*
-        findViewById(R.id.button1).setEnabled(!finished);
-        findViewById(R.id.button2).setEnabled(!finished);
-        findViewById(R.id.button3).setEnabled(!finished);
-        */
         findViewById(R.id.question).setVisibility(gameVisibility);
         findViewById(R.id.questionNr).setVisibility(gameVisibility);
         findViewById(R.id.button1).setVisibility(gameVisibility);
@@ -109,7 +104,7 @@ public class WordGuessMainActivity extends Activity {
         	// Beware - har använder vi den inbyggda funktionaliteten (layouten)
         	ArrayAdapter<String> strings = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, resultList);
         	setContentView(R.layout.result_layout);
-        	ListView listView = (ListView)findViewById(R.id.resultsView);
+        	ListView listView = (ListView)findViewById(R.id.resultsList);
         	listView.setAdapter(strings);
         } else if( game!= null ) {
         	Question q = game.getQuestions().get(gameState);

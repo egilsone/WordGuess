@@ -32,8 +32,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int button3=0x7f070004;
         public static final int question=0x7f070001;
         public static final int questionNr=0x7f070000;
-        public static final int resultLabel=0x7f070006;
-        public static final int resultsView=0x7f070007;
+        public static final int resultsLabel=0x7f070006;
+        public static final int resultsList=0x7f070007;
     }
     public static final class layout {
         public static final int activity_word_guess_main=0x7f030000;

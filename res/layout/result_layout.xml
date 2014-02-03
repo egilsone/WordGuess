@@ -6,36 +6,33 @@
     android:background="@color/black_overlay"
     tools:context=".WordGuessMainActivity" >
 
-        
-            
+    <TextView
+        android:id="@+id/resultsLabel"
+        style="@style/labelStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:text="Resultat" />
 
-            <TextView
-                android:id="@+id/resultLabel"
-            style="@style/labelStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-                android:text="Resultat"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+    <ListView
+        android:id="@+id/resultsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ButtonNewGameFromResult"
+        android:layout_below="@+id/resultsLabel" >
+    </ListView>
 
-            <ListView
-                android:id="@+id/resultsView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/resultLabel"
-                android:layout_above="@+id/ButtonNewGameFromResult" >
-            </ListView>
+    <Button
+        android:id="@+id/ButtonNewGameFromResult"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="14dp"
+        android:onClick="buttonNewGameClickedFromResult"
+        android:text="Spela igen" />
 
-            <Button
-                android:id="@+id/ButtonNewGameFromResult"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="20dp"
-                android:layout_marginBottom="14dp"
-                android:onClick="buttonNewGameClickedFromResult"
-                android:text="Spela igen" />
-
-        </RelativeLayout>
+</RelativeLayout>
