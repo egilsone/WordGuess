@@ -1,53 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_overlay"
     tools:context=".WordGuessMainActivity" >
 
-    <!--
-         This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows.
-    -->
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true" >
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="410dp"
-            android:background="@color/black_overlay" >
+        
+            
 
             <TextView
-                android:id="@+id/resultlabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/resultLabel"
+            style="@style/labelStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
                 android:text="Resultat"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <ListView
                 android:id="@+id/resultsView"
                 android:layout_width="wrap_content"
-                android:layout_height="300dp"
-                android:layout_below="@+id/resultlabel" >
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/resultLabel"
+                android:layout_above="@+id/ButtonNewGameFromResult" >
             </ListView>
 
             <Button
                 android:id="@+id/ButtonNewGameFromResult"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="false"
-                android:layout_below="@+id/resultsView"
-                android:layout_centerInParent="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:layout_margin="20dp"
+                android:layout_marginBottom="14dp"
                 android:onClick="buttonNewGameClickedFromResult"
                 android:text="Spela igen" />
 
         </RelativeLayout>
-
-    </FrameLayout>
-    
-</FrameLayout>

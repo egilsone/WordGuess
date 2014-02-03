@@ -32,7 +32,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int button3=0x7f070004;
         public static final int question=0x7f070001;
         public static final int questionNr=0x7f070000;
-        public static final int resultlabel=0x7f070006;
+        public static final int resultLabel=0x7f070006;
         public static final int resultsView=0x7f070007;
     }
     public static final class layout {
@@ -76,8 +76,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int AppTheme=0x7f060001;
         public static final int ButtonBar=0x7f060003;
         public static final int ButtonBarButton=0x7f060004;
-        public static final int FullscreenActionBarStyle=0x7f060005;
+        public static final int FullscreenActionBarStyle=0x7f060006;
         public static final int FullscreenTheme=0x7f060002;
+        public static final int labelStyle=0x7f060005;
     }
     public static final class styleable {
         /** 

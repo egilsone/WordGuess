@@ -66,16 +66,18 @@ public class WordGuessMainActivity extends Activity {
         // Inaktivera svarsknapparna vid uppstart
     	boolean gameExists = game != null;
     	boolean finished = game!=null && game.isFinished();
-    	int buttonVisibility = gameExists ? View.VISIBLE : View.INVISIBLE;
+    	int gameVisibility = gameExists ? View.VISIBLE : View.INVISIBLE;
 
     	/*
         findViewById(R.id.button1).setEnabled(!finished);
         findViewById(R.id.button2).setEnabled(!finished);
         findViewById(R.id.button3).setEnabled(!finished);
         */
-        findViewById(R.id.button1).setVisibility(buttonVisibility);
-        findViewById(R.id.button2).setVisibility(buttonVisibility);
-        findViewById(R.id.button3).setVisibility(buttonVisibility);
+        findViewById(R.id.question).setVisibility(gameVisibility);
+        findViewById(R.id.questionNr).setVisibility(gameVisibility);
+        findViewById(R.id.button1).setVisibility(gameVisibility);
+        findViewById(R.id.button2).setVisibility(gameVisibility);
+        findViewById(R.id.button3).setVisibility(gameVisibility);
 
         if( finished ) {
         	List<String> resultList = new ArrayList<String>();
