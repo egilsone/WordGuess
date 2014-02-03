@@ -34,13 +34,8 @@ public class WordGuessMainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_word_guess_main);
-
-        // Inaktivera svarsknapparna vid uppstart
-        findViewById(R.id.button1).setEnabled(false);
-        findViewById(R.id.button2).setEnabled(false);
-        findViewById(R.id.button3).setEnabled(false);
-        
-        newGame(null);
+        // Main logic
+        loadCurrentQuestion();
     }
 
     /** User interaction **/
@@ -69,20 +64,19 @@ public class WordGuessMainActivity extends Activity {
     /** Load everything from question number i **/
     private void loadCurrentQuestion() {
         // Inaktivera svarsknapparna vid uppstart
-    	boolean finished = game.isFinished();
-    	int buttonVisibility = View.VISIBLE;
-    	int resultVisibility = View.INVISIBLE;
-    	if( finished ) {
-    		buttonVisibility = View.INVISIBLE;
-    		resultVisibility = View.VISIBLE;
-    	}
+    	boolean gameExists = game != null;
+    	boolean finished = game!=null && game.isFinished();
+    	int buttonVisibility = gameExists ? View.VISIBLE : View.INVISIBLE;
+
+    	/*
         findViewById(R.id.button1).setEnabled(!finished);
         findViewById(R.id.button2).setEnabled(!finished);
         findViewById(R.id.button3).setEnabled(!finished);
+        */
         findViewById(R.id.button1).setVisibility(buttonVisibility);
         findViewById(R.id.button2).setVisibility(buttonVisibility);
         findViewById(R.id.button3).setVisibility(buttonVisibility);
-        // findViewById(R.id.resultsView).setVisibility(resultVisibility);
+
         if( finished ) {
         	List<String> resultList = new ArrayList<String>();
         	// Iterate the questions and answers - and show some indication of the answers
@@ -115,7 +109,7 @@ public class WordGuessMainActivity extends Activity {
         	setContentView(R.layout.result_layout);
         	ListView listView = (ListView)findViewById(R.id.resultsView);
         	listView.setAdapter(strings);
-        } else {
+        } else if( game!= null ) {
         	Question q = game.getQuestions().get(gameState);
         	TextView questionNrView = (TextView)findViewById(R.id.questionNr);
         	TextView questionView = (TextView)findViewById(R.id.question);
