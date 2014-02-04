@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_overlay"
+    tools:context=".WordGuessMainActivity" >
+
+    <TextView
+        android:id="@+id/resultSummaryLabel"
+        style="@style/labelStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:text="Resultat" />
+
+    <ListView
+        android:id="@+id/resultSummaryList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ButtonNewGameFromResultSummary"
+        android:layout_below="@+id/resultSummaryLabel"
+        android:choiceMode="multipleChoice"
+        tools:listitem="@android:layout/simple_list_item_checked" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/ButtonNewGameFromResultSummary"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="14dp"
+        android:onClick="buttonNewGameClickedFromResultSummary"
+        android:text="Spela igen" />
+
+</RelativeLayout>

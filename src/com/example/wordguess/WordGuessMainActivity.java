@@ -27,6 +27,7 @@ public class WordGuessMainActivity extends Activity {
     private int gameState = 0;
     private int numberOfQuestions = 5;
     private int numberOfAlternatives = 3;
+    private boolean summary = true;
     // private List<String> results = new ArrayList<String>();
      
     @Override
@@ -54,6 +55,10 @@ public class WordGuessMainActivity extends Activity {
     public void buttonNewGameClickedFromResult(View view) {
     	newGame(view);
     }
+    public void buttonNewGameClickedFromResultSummary(View view) {
+    	newGame(view);
+    }
+    
     /** Some sort of maintaining state **/
     public void newGame(View view) {
     	game = GameFactory.createSimpleGame(numberOfQuestions, numberOfAlternatives);
@@ -75,37 +80,64 @@ public class WordGuessMainActivity extends Activity {
         findViewById(R.id.button3).setVisibility(gameVisibility);
 
         if( finished ) {
-        	List<String> resultList = new ArrayList<String>();
-        	// Iterate the questions and answers - and show some indication of the answers
-        	for( int i = 1; i <= game.getQuestions().size(); i++ ) {
-        		Question q = game.getQuestions().get(i-1);
-        		resultList.add("Fråga " + i + ": " + q.getQuestion() );
-        		for( Answer a : q.getPossibleAnswers() ) {
-        			String myText = a.getAnswer();
-        			String extraText = "";
-        			// Var det detta användaren svarade
-        			boolean isUserAnswer = q.getUserAnswer() == a;
-        			if( isUserAnswer ) {
-        				// Om det är det svar man lämnat skall vi ange rätt/fel
-        				extraText = a.isCorrect() ? "RÄTT!" : "DITT SVAR";
-        			} else {
-        				// annars skall vi skriva ut 
-        				extraText = a.isCorrect() ? "RÄTT SVAR" : "";
-        			}
-        			// Tre fall:
-        			// 1. användarens svar är rätt => "RÄTT!"
-        			// 2. användarens svar är fel  => Skriv ut "RÄTT SVAR!" på den korrekta, DITT SVAR på användarens
-        			// 3. varken eller - skriv ingenting
-        			resultList.add( "  " + myText + " " + extraText);
-        		}
-        	}
             // Initiera an adapter redan nu
         	// results.add("Empty string");
         	// Beware - har använder vi den inbyggda funktionaliteten (layouten)
-        	ArrayAdapter<String> strings = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, resultList);
-        	setContentView(R.layout.result_layout);
-        	ListView listView = (ListView)findViewById(R.id.resultsList);
-        	listView.setAdapter(strings);
+        	if( summary ) {
+            	List<String> resultList = new ArrayList<String>();
+            	List<Boolean> answerList = new ArrayList<Boolean>();
+            	// Iterate the questions and answers - and show some indication of the answers
+            	for( int i = 1; i <= game.getQuestions().size(); i++ ) {
+            		Question q = game.getQuestions().get(i-1);
+            		boolean correct = q.isAnsweredCorrectly();
+            		StringBuffer buf = new StringBuffer("Fråga " + i + ": " + q.getQuestion() + q.getCorrectAnswer().getAnswer());
+            		if( !correct ) {
+                		buf.append(" - inte " + q.getUserAnswer().getAnswer());
+            		}
+            		resultList.add(buf.toString());
+            		answerList.add(correct);
+            	}
+
+        		ArrayAdapter<String> strings = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, resultList);
+            	setContentView(R.layout.result_summary);
+            	ListView listView = (ListView)findViewById(R.id.resultSummaryList);
+            	listView.setAdapter(strings);
+            	int i = 0;
+            	for( Boolean boolVal : answerList ) {
+            		listView.setItemChecked(i, boolVal);
+            		i++;
+            	}
+        	} else {
+            	List<String> resultList = new ArrayList<String>();
+            	// Iterate the questions and answers - and show some indication of the answers
+            	for( int i = 1; i <= game.getQuestions().size(); i++ ) {
+            		Question q = game.getQuestions().get(i-1);
+            		resultList.add("Fråga " + i + ": " + q.getQuestion() );
+            		for( Answer a : q.getPossibleAnswers() ) {
+            			String myText = a.getAnswer();
+            			String extraText = "";
+            			// Var det detta användaren svarade
+            			boolean isUserAnswer = q.getUserAnswer() == a;
+            			if( isUserAnswer ) {
+            				// Om det är det svar man lämnat skall vi ange rätt/fel
+            				extraText = a.isCorrect() ? "RÄTT!" : "DITT SVAR";
+            			} else {
+            				// annars skall vi skriva ut 
+            				extraText = a.isCorrect() ? "RÄTT SVAR" : "";
+            			}
+            			// Tre fall:
+            			// 1. användarens svar är rätt => "RÄTT!"
+            			// 2. användarens svar är fel  => Skriv ut "RÄTT SVAR!" på den korrekta, DITT SVAR på användarens
+            			// 3. varken eller - skriv ingenting
+            			resultList.add( "  " + myText + " " + extraText);
+            		}
+            	}
+        		
+        		ArrayAdapter<String> strings = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, resultList);
+            	setContentView(R.layout.result_layout);
+            	ListView listView = (ListView)findViewById(R.id.resultsList);
+            	listView.setAdapter(strings);
+        	}
         } else if( game!= null ) {
         	Question q = game.getQuestions().get(gameState);
         	TextView questionNrView = (TextView)findViewById(R.id.questionNr);
