@@ -15,7 +15,7 @@ public class GameTest {
 	}
 	
 	@Test
-	public void test() {
+	public void testThatGameIsNotFinished() {
 		Game game = GameFactory.createSimpleGame(5,3);
 		assertEquals(false, game.isFinished());
 		assertTrue(game.percentageResult() <= 0.0);

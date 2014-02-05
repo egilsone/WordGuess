@@ -14,32 +14,33 @@ import com.example.wordguess.game.GameFactory;
 import com.example.wordguess.interfaces.Answer;
 import com.example.wordguess.interfaces.Game;
 import com.example.wordguess.interfaces.Question;
-import com.example.wordguess.util.SystemUiHider;
 
 /**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- *
- * @see SystemUiHider
+ * Main activity
+ * Handles "a lot" of display logic from the game
+ * TODO:
+ * 1. More dynamic ways of creating games (number of questions/alternatives)
+ * 2. More dynamic ways of displaying the result
+ * 3. More dynamic ways of handling quizzes (for example free text)
  */
 public class WordGuessMainActivity extends Activity {
     private Game game = null;
-    private int gameState = 0;
-    private int numberOfQuestions = 5;
-    private int numberOfAlternatives = 3;
-    private boolean summary = true;
-    // private List<String> results = new ArrayList<String>();
+    private int currentQuestionIndex = 0;
+    // These final's should be set by the user on startup
+    private final int numberOfQuestions = 5;
+    private final int numberOfAlternatives = 3;
+    private final boolean summary = true;
      
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_word_guess_main);
-        // Main logic
+        // main logic to initialize view
         loadCurrentQuestion();
     }
 
-    /** User interaction **/
+    /** User interaction - should be dynamic with (probably) an onClickListener **/
     public void button1Clicked(View view) {
     	buttonClicked(1, view);
     }
@@ -49,6 +50,8 @@ public class WordGuessMainActivity extends Activity {
     public void button3Clicked(View view) {
     	buttonClicked(3, view);
     }
+
+    /** Dummies to be able to handle the callbacks from the different layouts **/ 
     public void buttonNewGameClicked(View view) {
     	newGame(view);
     }
@@ -59,20 +62,25 @@ public class WordGuessMainActivity extends Activity {
     	newGame(view);
     }
     
-    /** Some sort of maintaining state **/
+    /** Initialize a new game and switch to the main view **/
     public void newGame(View view) {
     	game = GameFactory.createSimpleGame(numberOfQuestions, numberOfAlternatives);
-    	gameState = 0;
+    	currentQuestionIndex = 0;
     	setContentView(R.layout.activity_word_guess_main);
     	loadCurrentQuestion();
     }
-    /** Load everything from question number i **/
+    /* 
+     * Load everything for the current question - or if finished - move to result presentation
+     * TODO: Cleanup!!! Handle the results in separate methods. 
+     */
     private void loadCurrentQuestion() {
-        // Inaktivera svarsknapparna vid uppstart
+        // We could get here without a game at all - or with just a new initialized
     	boolean gameExists = game != null;
     	boolean finished = game!=null && game.isFinished();
     	int gameVisibility = gameExists ? View.VISIBLE : View.INVISIBLE;
 
+    	//TODO: disable/enable/create as many buttons as there are in the current question
+    	//      not only button1/button2/button3
         findViewById(R.id.question).setVisibility(gameVisibility);
         findViewById(R.id.questionNr).setVisibility(gameVisibility);
         findViewById(R.id.button1).setVisibility(gameVisibility);
@@ -80,9 +88,7 @@ public class WordGuessMainActivity extends Activity {
         findViewById(R.id.button3).setVisibility(gameVisibility);
 
         if( finished ) {
-            // Initiera an adapter redan nu
-        	// results.add("Empty string");
-        	// Beware - har använder vi den inbyggda funktionaliteten (layouten)
+        	// TODO: more dynamic ways of displaying the result (should depend on the game - what type of quiz is it)
         	if( summary ) {
             	List<String> resultList = new ArrayList<String>();
             	List<Boolean> answerList = new ArrayList<Boolean>();
@@ -90,7 +96,7 @@ public class WordGuessMainActivity extends Activity {
             	for( int i = 1; i <= game.getQuestions().size(); i++ ) {
             		Question q = game.getQuestions().get(i-1);
             		boolean correct = q.isAnsweredCorrectly();
-            		StringBuffer buf = new StringBuffer("Fråga " + i + ": " + q.getQuestion() + q.getCorrectAnswer().getAnswer());
+            		StringBuffer buf = new StringBuffer(i + ": " + q.getQuestion() + q.getCorrectAnswer().getAnswer());
             		if( !correct ) {
                 		buf.append(" - inte " + q.getUserAnswer().getAnswer());
             		}
@@ -110,26 +116,26 @@ public class WordGuessMainActivity extends Activity {
         	} else {
             	List<String> resultList = new ArrayList<String>();
             	// Iterate the questions and answers - and show some indication of the answers
+            	// This is probably more useful when displaying some statistics of the supplied answers
             	for( int i = 1; i <= game.getQuestions().size(); i++ ) {
             		Question q = game.getQuestions().get(i-1);
             		resultList.add("Fråga " + i + ": " + q.getQuestion() );
             		for( Answer a : q.getPossibleAnswers() ) {
-            			String myText = a.getAnswer();
-            			String extraText = "";
-            			// Var det detta användaren svarade
-            			boolean isUserAnswer = q.getUserAnswer() == a;
-            			if( isUserAnswer ) {
-            				// Om det är det svar man lämnat skall vi ange rätt/fel
+            			// Four cases for each answer
+            			//   1. this answer was the users answer and it was correct => "RÄTT!"
+            			//   2. this answer was the users answer but it was not correct => "DITT SVAR!" 
+            			//   3. this answer was the correct answer but not the users answer => "RÄTT SVAR!"
+            			//   4. none of the above - nor correct nor users answer
+            			String extraText = ""; // case 4
+            			boolean isThisTheUsersAnswer = q.getUserAnswer() == a;
+            			if( isThisTheUsersAnswer ) {
+            				// Case 1 and 2
             				extraText = a.isCorrect() ? "RÄTT!" : "DITT SVAR";
             			} else {
-            				// annars skall vi skriva ut 
+            				// Case 3 and 4 
             				extraText = a.isCorrect() ? "RÄTT SVAR" : "";
             			}
-            			// Tre fall:
-            			// 1. användarens svar är rätt => "RÄTT!"
-            			// 2. användarens svar är fel  => Skriv ut "RÄTT SVAR!" på den korrekta, DITT SVAR på användarens
-            			// 3. varken eller - skriv ingenting
-            			resultList.add( "  " + myText + " " + extraText);
+            			resultList.add( "  " + a.getAnswer() + " " + extraText);
             		}
             	}
         		
@@ -138,11 +144,11 @@ public class WordGuessMainActivity extends Activity {
             	ListView listView = (ListView)findViewById(R.id.resultsList);
             	listView.setAdapter(strings);
         	}
-        } else if( game!= null ) {
-        	Question q = game.getQuestions().get(gameState);
+        } else if( game != null ) {
+        	Question q = game.getQuestions().get(currentQuestionIndex);
         	TextView questionNrView = (TextView)findViewById(R.id.questionNr);
         	TextView questionView = (TextView)findViewById(R.id.question);
-        	questionNrView.setText("Fråga nr " + (gameState+1) );
+        	questionNrView.setText("Fråga nr " + (currentQuestionIndex+1) );
         	questionView.setText(q.getQuestion());
         	TextView alt1 = (TextView)findViewById(R.id.button1);
         	TextView alt2 = (TextView)findViewById(R.id.button2);
@@ -156,11 +162,11 @@ public class WordGuessMainActivity extends Activity {
     /** Register the users answer in the game */
 	private void buttonClicked(int alternative, View view) {
 		// Register the answer
-    	Question currentQuestion = game.getQuestions().get(gameState);
+    	Question currentQuestion = game.getQuestions().get(currentQuestionIndex);
     	Answer currentAnswer     = currentQuestion.getPossibleAnswers().get(alternative-1);
     	currentQuestion.setUserAnswer(currentAnswer);
     	// Step forward to next question - or display the result
-		gameState++;
+		currentQuestionIndex++;
 		loadCurrentQuestion();
     }
 }

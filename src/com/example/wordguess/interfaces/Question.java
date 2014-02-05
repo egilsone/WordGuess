@@ -9,16 +9,16 @@ public interface Question {
 	
 	public List<Answer> getPossibleAnswers();
 	
-	public Answer getCorrectAnswer();
+	public Answer getUserAnswer();
 	
 	public void setUserAnswer(Answer answer);
-	
-	public Answer getUserAnswer();
 	
 	public boolean isAnsweredCorrectly();
 
 	public boolean isAnswered();
 
+	public Answer getCorrectAnswer();
+	
 	public void setCorrectAnswer(Answer correctAnswer);
 	
 }
