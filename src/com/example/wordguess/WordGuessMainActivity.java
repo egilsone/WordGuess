@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.wordguess.game.GameFactory;
+import com.example.wordguess.game.NumericGameFactory;
 import com.example.wordguess.interfaces.Answer;
 import com.example.wordguess.interfaces.Game;
 import com.example.wordguess.interfaces.Question;
@@ -64,7 +64,7 @@ public class WordGuessMainActivity extends Activity {
     
     /** Initialize a new game and switch to the main view **/
     public void newGame(View view) {
-    	game = GameFactory.createSimpleGame(numberOfQuestions, numberOfAlternatives);
+    	game = NumericGameFactory.createSimpleGame(numberOfQuestions, numberOfAlternatives,null);
     	currentQuestionIndex = 0;
     	setContentView(R.layout.activity_word_guess_main);
     	loadCurrentQuestion();
