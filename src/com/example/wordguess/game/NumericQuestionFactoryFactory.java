@@ -108,28 +108,31 @@ public class NumericQuestionFactoryFactory {
 		}
 	
 	}
+	
+	// If we get 8,9 
+	// We should present 72 / 8 = 9
 	private static class DivideQuestionFactory implements NumericQuestionFactory {
 		@Override
 		public String getNewQuestion(int term1, int term2) {
-			if( term2 == 0 ) {
+			if( term1 == 0 ) {
 				throw new IllegalArgumentException("Can't create divide question with divisor = 0");
 			} else {
-				return term1 + " / " + term2 + " = ";
+				return (term1*term2) + " / " + term1 + " = ";
 			}
 		}
 	
 		@Override
 		public String getIncorrectAlternative(int term1, int term2, int alternativeNumber) {
 			if( alternativeNumber % 2 == 0 ) {
-				return "" + (term1 / term2 + alternativeNumber);
+				return "" + (term2 + alternativeNumber);
 			} else {
-				return "" + (term1 / term2 - alternativeNumber);
+				return "" + (term2 - alternativeNumber);
 			}
 		}
 	
 		@Override
 		public String getCorrectAnswer(int term1, int term2) {
-			return "" + (term1 / term2);
+			return "" + (term2);
 		}
 	
 	}

@@ -9,10 +9,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.wordguess.game.GameRange;
 import com.example.wordguess.game.NumericGameFactory;
+import com.example.wordguess.game.NumericQuestionFactoryFactory;
 import com.example.wordguess.interfaces.Answer;
 import com.example.wordguess.interfaces.Game;
+import com.example.wordguess.interfaces.NumericQuestionFactory;
 import com.example.wordguess.interfaces.Question;
 
 /**
@@ -30,6 +34,8 @@ public class WordGuessMainActivity extends Activity {
     private final int numberOfQuestions = 5;
     private final int numberOfAlternatives = 3;
     private final boolean summary = true;
+	// If we get a "/" game - then the range should be +1
+	private GameRange termRange = new GameRange(1, 9, 0, 9);
      
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +70,16 @@ public class WordGuessMainActivity extends Activity {
     
     /** Initialize a new game and switch to the main view **/
     public void newGame(View view) {
-    	game = NumericGameFactory.createSimpleGame(numberOfQuestions, numberOfAlternatives,null);
+    	String sortOfGame = "+";
+    	if( view instanceof android.widget.Button ) {
+    		try {
+    			sortOfGame = ((android.widget.Button)view).getText().toString();
+    		} catch ( RuntimeException e ) {
+    			Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+    		}
+    	}
+    	NumericQuestionFactory nqf = NumericQuestionFactoryFactory.getQuestionFactory(sortOfGame);
+    	game = NumericGameFactory.createSimpleGame(numberOfQuestions, numberOfAlternatives, termRange, nqf);
     	currentQuestionIndex = 0;
     	setContentView(R.layout.activity_word_guess_main);
     	loadCurrentQuestion();

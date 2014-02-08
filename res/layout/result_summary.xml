@@ -12,30 +12,60 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
+        android:layout_centerInParent="false"
         android:layout_margin="10dp"
         android:text="Resultat" />
 
     <ListView
         android:id="@+id/resultSummaryList"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ButtonNewGameFromResultSummary"
+        android:layout_height="300dp"
         android:layout_below="@+id/resultSummaryLabel"
         android:choiceMode="multipleChoice"
         tools:listitem="@android:layout/simple_list_item_checked" >
-
     </ListView>
-
-    <Button
-        android:id="@+id/ButtonNewGameFromResultSummary"
-        android:layout_width="200dp"
+    
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
-        android:layout_marginBottom="14dp"
-        android:onClick="buttonNewGameClickedFromResultSummary"
-        android:text="Spela igen" />
+        android:layout_below="@+id/resultSummaryList"
+        android:layout_centerInParent="true" >
+
+        <Button
+            android:id="@+id/ButtonNewGameResultPlus"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="buttonNewGameClickedFromResultSummary"
+            android:text="+" />
+
+        <Button
+            android:id="@+id/ButtonNewGameResultMinus"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@+id/ButtonNewGameResultPlus"
+            android:onClick="buttonNewGameClickedFromResultSummary"
+            android:text="-" />
+
+        <Button
+            android:id="@+id/ButtonNewGameResultMultiply"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@+id/ButtonNewGameResultMinus"
+            android:onClick="buttonNewGameClickedFromResultSummary"
+            android:text="*" />
+
+        <Button
+            android:id="@+id/ButtonNewGameResultDivide"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@+id/ButtonNewGameResultMultiply"
+            android:onClick="buttonNewGameClickedFromResultSummary"
+            android:text="/" />
+    </RelativeLayout>
 
 </RelativeLayout>

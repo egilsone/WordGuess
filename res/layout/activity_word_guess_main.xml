@@ -66,17 +66,44 @@
         android:onClick="button3Clicked"
         android:text="Button3" />
 
-    <Button
-        android:id="@+id/ButtonNewGame"
-        android:layout_width="fill_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="false"
         android:layout_below="@+id/button3"
-        android:layout_centerInParent="true"
-        android:layout_margin="20dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:onClick="buttonNewGameClicked"
-        android:text="Starta nytt spel" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true" >
+
+        <Button
+            android:id="@+id/ButtonNewGamePlus"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="buttonNewGameClicked"
+            android:text="+" />
+        <Button
+            android:id="@+id/ButtonNewGameMinus"
+            android:layout_width="40dp"
+            android:layout_toRightOf="@+id/ButtonNewGamePlus"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="buttonNewGameClicked"
+            android:text="-" />
+        <Button
+            android:id="@+id/ButtonNewGameMultiply"
+            android:layout_width="40dp"
+            android:layout_toRightOf="@+id/ButtonNewGameMinus"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="buttonNewGameClicked"
+            android:text="*" />
+        <Button
+            android:id="@+id/ButtonNewGameDivide"
+            android:layout_width="40dp"
+            android:layout_toRightOf="@+id/ButtonNewGameMultiply"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="buttonNewGameClicked"
+            android:text="/" />
+        </RelativeLayout>
 
 </RelativeLayout>

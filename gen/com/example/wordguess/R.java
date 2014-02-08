@@ -25,18 +25,24 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int ButtonNewGame=0x7f070005;
-        public static final int ButtonNewGameFromResult=0x7f070008;
-        public static final int ButtonNewGameFromResultSummary=0x7f07000b;
+        public static final int ButtonNewGameDivide=0x7f070008;
+        public static final int ButtonNewGameFromResult=0x7f07000b;
+        public static final int ButtonNewGameMinus=0x7f070006;
+        public static final int ButtonNewGameMultiply=0x7f070007;
+        public static final int ButtonNewGamePlus=0x7f070005;
+        public static final int ButtonNewGameResultDivide=0x7f070011;
+        public static final int ButtonNewGameResultMinus=0x7f07000f;
+        public static final int ButtonNewGameResultMultiply=0x7f070010;
+        public static final int ButtonNewGameResultPlus=0x7f07000e;
         public static final int button1=0x7f070002;
         public static final int button2=0x7f070003;
         public static final int button3=0x7f070004;
         public static final int question=0x7f070001;
         public static final int questionNr=0x7f070000;
-        public static final int resultSummaryLabel=0x7f070009;
-        public static final int resultSummaryList=0x7f07000a;
-        public static final int resultsLabel=0x7f070006;
-        public static final int resultsList=0x7f070007;
+        public static final int resultSummaryLabel=0x7f07000c;
+        public static final int resultSummaryList=0x7f07000d;
+        public static final int resultsLabel=0x7f070009;
+        public static final int resultsList=0x7f07000a;
     }
     public static final class layout {
         public static final int activity_word_guess_main=0x7f030000;
